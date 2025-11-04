@@ -1,5 +1,6 @@
 package com.paytrack.payments.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -10,7 +11,8 @@ import org.hibernate.annotations.GenericGenerator;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Client {
+@Table(name = "users")
+public class User {
     @Id
     @Column(updatable = false, nullable = false)
     @GeneratedValue(generator = "UUID")
@@ -19,9 +21,8 @@ public class Client {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     private String id;
-    private String name, email, phone, notes;
+    private String name, email;
 
-    @ManyToOne
-    @JoinColumn(name="user_id", referencedColumnName = "id")
-    private User user;
+    @JsonIgnore
+    private String password;
 }

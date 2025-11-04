@@ -1,8 +1,12 @@
 package com.paytrack.payments.entity;
 
+import com.paytrack.payments.enums.InvoiceStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.ManyToAny;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -10,7 +14,7 @@ import org.hibernate.annotations.GenericGenerator;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Client {
+public class Invoice {
     @Id
     @Column(updatable = false, nullable = false)
     @GeneratedValue(generator = "UUID")
@@ -19,9 +23,16 @@ public class Client {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     private String id;
-    private String name, email, phone, notes;
 
     @ManyToOne
-    @JoinColumn(name="user_id", referencedColumnName = "id")
+    @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
+    private Client client;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    private InvoiceStatus status;
+    private float total;
+    private LocalDateTime due_date, created_at;
 }

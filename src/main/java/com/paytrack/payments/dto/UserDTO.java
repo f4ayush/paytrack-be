@@ -10,9 +10,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ClientDTO {
+public class UserDTO {
     private UUID id;
     @NotNull
-    private String name, email, phone, notes;
-    private String userId;
+    private String name, email, password;
 }
