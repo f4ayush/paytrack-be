@@ -3,9 +3,12 @@ package com.paytrack.payments.entity;
 import com.paytrack.payments.enums.InvoiceStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.ManyToAny;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,6 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class Invoice {
     @Id
     @Column(updatable = false, nullable = false)
@@ -32,7 +36,11 @@ public class Invoice {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    private InvoiceStatus status;
+    @Enumerated(EnumType.STRING)
+    private InvoiceStatus status = InvoiceStatus.DUE;
     private float total;
-    private LocalDateTime due_date, created_at;
+    private LocalDate dueDate;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 }

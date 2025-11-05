@@ -27,11 +27,7 @@ public class InvoiceItem {
     @JoinColumn(name = "invoice_id", referencedColumnName = "id", nullable = false)
     private Invoice invoice;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
     private String description;
-    private int qty;
+    private int quantity;
     private float price, tax;
 }
